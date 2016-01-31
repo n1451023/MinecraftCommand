@@ -1,0 +1,35 @@
+/give @p sign 1 0 {
+  BlockEntityTag: {
+    Text1: {
+      "text":"--------------",
+      "bold":true,
+      "clickEvent": {
+        "action": "run_command",
+        "value": "tellraw @p {
+          extra[
+            {
+              text: \"倉庫総合案内\n\",
+              color: aqua,
+              bold: true
+            }
+          ]
+        }"
+      },
+      Text2: {
+        "text":"倉庫総合案内",
+        "color":"dark_blue",
+        "bold":true
+      },
+      Text3: {
+        "text":"(右クリックで案内を表示)"
+      },
+      Text4: {
+        "text":"-------------",
+        "bold":true
+      }
+    }
+  },
+  display: {
+    Name: "Custom Sign"
+  }
+}
