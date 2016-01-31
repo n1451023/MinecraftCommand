@@ -1,0 +1,28 @@
+/give lasta21 sign 1 0 {
+  BlockEntityTag:{
+    Text1:"{
+      text:\"=======\",
+      clickEvent:{
+        action: \"run_command\",
+        value: \"tellraw @a [
+          {
+            text: \\\"倉庫総合案内\n\\\",
+            color: \\\"aqua\\\",
+            bold: true
+          },
+          {text:\\\"A-1 : 石・土\n\\\"},
+          {text:\\\"A-2 : 砂・砂利\n\\\"},
+          {text:\\\"B-1 : 木・植物\n\\\"},
+          {text:\\\"B-2 : ネザー・火成岩\n\n\\\"},
+          {text:\\\"C-1 : 鉱石・装具・RS回路\n\\\"},
+          {text:\\\"C-2 : 友好Mobアイテム・堅焼き粘土\n\\\"},
+          {text:\\\"D-1 : 海底神殿\n\\\"},
+          {text:\\\"D-2 : 敵対Mobアイテム\\\"}
+        ]
+      }
+    }"
+  },
+  display:{
+    Name:"Custom Sign"
+  }
+}
