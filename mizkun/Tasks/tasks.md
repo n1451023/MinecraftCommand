@@ -1,7 +1,75 @@
 # Tasks
 ## やりたいことリスト
+* スコアボード練習
+* MP実装
+* TP魔法化
 * 魔法
 * 雷の矢
+
+### スコアボード練習
+#### 方針
+* スコアボード追加→ある入力でplayer.scoreboad=1→そのplayerをtp
+
+#### 実装
+##### コマンド/コマンドブロック
+* スコアボード追加
+  * /scoreboard objectives add istoMizHouse dummy
+* istoMizHouse(スコアボード)を1にする
+  * /scoreboard players set @p istoMizHouse 1
+* istoMizHouse=1のプレイヤーを検知(正確には1以上) // コマンドブロックA
+  * /scoreboard players test @p istoMizHouse 1
+* istoMizHouseが1のプレイヤーをtpする
+  * /tp @p[score_istoMizHouse_min=1] -296 76 63
+* istoMizHouseが1のプレイヤーにメッセージ
+  * /title @p[score_istoMizHouse_min=1] title {text:"DON'T MOVE!!",color:red}
+* istoMizHouseを0にする
+  * /scoreboard players set @p istoMizHouse 0
+
+
+### MP実装
+#### 方針
+* スコアボード追加→0<=x<=200(暫定)の間1/tickで増え続ける
+* 0<=x<=200のプレイヤーに追加の方がよい？<-こっちから実装
+
+#### 実装
+* スコアボード追加
+  * /scoreboard objectives add MP dummy
+* スコアボード表示
+  * /scoreboard objectives setdisplay sidebar MP
+* (スコアボードの表示を消すとき)
+  * /scoreboard objectives setdisplay sidebar
+* MPを0にする(初期化)
+  * /scoreboard players set @p MP 0
+* x : MP | 0<=x<=200 のプレイヤーに対し, MPを回復
+  * /scoreboard players add @p[score_MP=200, score_MP_min=0] MP 1
+
+
+### TP魔法化
+#### 方針
+* istoMizHouse追加→istoMizHouse=1のプレイヤーに対してMP比較
+  * MP>=5 -> TP -> istoMizHouse=0
+  * MP< 5 -> 足りないメッセージ -> istoMizHouse=0
+
+#### 実装
+* istoMizHouse追加
+  * /scoreboard objectives add istoMizHouse dummy
+* istoMizHouse=1にする // 入力
+  * /scoreboard players set @p istoMizHouse 1
+* MPの比較(MP>=5)
+  * /scoreboard players test @p[score_istoMizHouse_min=1] MP 5
+  * istoMizHouse=1のplayerに対して,MP>=5ならば信号
+* MPの比較(MP<5)
+  * /scoreboard players test @p[score_istoMizHouse_min=1] MP 0 4
+  * istoMizHouse=1のplayerに対して,MP<5ならば信号(0<MP<4)
+* MP>=5 -> MP減らす -> tp
+  * /scoreboard players remove @p[score_istoMizHouse_min=1] MP 5
+  * /tellraw @p[score_istoMizHouse_min=1] {text:"Welcome, Back!!", color:blue,bold:true}
+  * /tp @p[score_istoMizHouse_min=1] -274.5 64 62
+* MP<5 -> メッセージ
+  * /tellraw @p[score_istoMizHouse_min=1] {text:"You Gain Warped!!", color:dark_purple,bold:true}
+* istoMizHouse=0にする
+  * /scoreboard players set @p[score_istoMizHouse_min=1] istoMizHouse 0
+
 
 ### 魔法
 #### 方針

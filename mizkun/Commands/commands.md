@@ -8,7 +8,6 @@
 * コマンド本
 * 鍵シリーズ
 
-
 ### かなとこの音
 * /playsound random.anvil_land @p ~ ~ ~ 60 1.0
 * \ｶｯｰﾝ/
@@ -26,6 +25,10 @@
 
 ### パーティクル
 * パーティクル
+* /execute @p[name=mizkun] ~ ~ ~  particle iconcrack_264 ~ ~1 ~ 1 1 1 0.01 1000
+* /particle snowshovel ~ ~ ~ 0.2 0.4 0.2 0.8 100
+* 魔法系のエフェクトはこれかな？
+　　* /execute @p[score_isXX_min=1] ~ ~ ~  particle snowshovel ~ ~ ~ 0.2 0.4 0.2 0.8 100
 * /particle iconcrack_264 ~ ~3 ~ 1 3 1 0.01 1000
 * [参考](http://www61.atwiki.jp/mccmd/pages/58.html)
 
