@@ -3,8 +3,10 @@
 * スコアボード練習
 * MP実装
 * TP魔法化
+* Fire_ball
 * 魔法
 * 雷の矢
+* 雷を召喚するアイテム
 
 ### スコアボード練習
 #### 方針
@@ -70,6 +72,34 @@
 * istoMizHouse=0にする
   * /scoreboard players set @p[score_istoMizHouse_min=1] istoMizHouse 0
 
+### Fire_Ball
+#### 方針
+* isFireBall追加→isFireBall=1のプレイヤーに対してMP比較
+  * MP>=30 -> TP -> isFireBall=0
+  * MP< 30 -> 足りないメッセージ -> isFireBall=0
+
+#### 実装
+* isFireBall追加
+  * /scoreboard objectives add isFireBall dummy
+* isFireBall=1にする //入力
+  * /scoreboard players set @p isFireBall 1
+* MPの比較(MP>=5)
+  * /scoreboard players test @p[score_isFireBall_min=1] MP 30
+  * isFireBall=1のplayerに対して,MP>=5ならば信号
+* MPの比較(MP<5)
+  * /scoreboard players test @p[score_isFireBall_min=1] MP 0 29
+  * isFireBall=1のplayerに対して,MP<5ならば信号(0<MP<4)
+* MP>=30 -> MP減らす -> tp
+  * /scoreboard players remove @p[score_isFireBall_min=1] MP 30
+  * /tellraw @p[score_isFireBall_min=1] {text:"Welcome, Back!!", color:blue,bold:true}
+  * /execute @p[score_isFireBall_min=1] ~ ~ ~ summon Fireball ~ ~ ~ {Motion:[0.0,0.0,0.0],direction:[0.0,0.0,0.0],ExplosionPower:0}
+* MP<30 -> メッセージ
+  * /tellraw @p[score_isFireBall_min=1] {text:"You Gain Warped!!", color:dark_purple,bold:true}
+* isFireBall=0にする
+  * /scoreboard players set @p[score_isFireBall_min=1] isFireBall 0
+
+
+  
 
 ### 魔法
 #### 方針
@@ -92,6 +122,16 @@
 * 火の玉
 * 雷の矢
 
+### 投げると雷が落ちる
+#### 方針
+* 1
+
+
+*/give mizkun minecraft:snowball 1 0 {display:{Name:"poi"}}
+* 
+
+
+
 ### 矢がささると雷が落ちる
 #### 方針
 * 矢={display:{name="thunder"}}的なラベル貼り
@@ -112,6 +152,18 @@
 #### 使えそうなコマンド
 * /summon Fireball ~ ~1 ~ {Motion:[0.0,0.0,0.0],direction:[0.0,0.0,0.0],ExplosionPower:5}
 * /scoreboard players set @a isApple 1 {Item:{id:minecraft:apple,tag:{display:{Name:"毒リンゴ"}}}} // 特定のアイテムにscore
-* /execute @e[score_isApple_min=1] ~ ~ ~ summon LightningBolt // 処理
+* /execute @e[score_isApple_min=1] ~ ~ ~ summon ~ ~ ~ LightningBolt // 処理
 
+### 雷を召喚するアイテム
+#### 方針
+* アイテム(ネザースター、名前を特殊なものに)
+* アイテムが地面に落ちたら雷発火
 
+#### 実装
+* アイテム
+  * /give @p minecraft:nether_star 1 0 {display:{Name:"LightningStar", ench:[]}}
+* 検知
+ * /scoreboard players set @a isApple 1 {Item:{id:minecraft:nether_star,tag:{display:{Name:"毒リンゴ"}}}} // 特定のアイテムにscore
+ * /testfor @e[Item:{display:{Name:"LightningStar", ench:[]}},Onground:true]
+ * /testfor @e[type=Item] {OnGround:true,Item:{id:minecraft:nether_star,tag:{display:{Name:"LightningStar"}}}}
+* /execute @e[type=Item] {OnGround:true,Item:{id:minecraft:nether_star,tag:{display:{Name:"LightningStar"}}}} ~ ~ ~ summon ~ ~ ~ LightningBolt

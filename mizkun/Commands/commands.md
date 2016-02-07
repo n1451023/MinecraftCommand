@@ -28,12 +28,14 @@
 * /execute @p[name=mizkun] ~ ~ ~  particle iconcrack_264 ~ ~1 ~ 1 1 1 0.01 1000
 * /particle snowshovel ~ ~ ~ 0.2 0.4 0.2 0.8 100
 * 魔法系のエフェクトはこれかな？
-　　* /execute @p[score_isXX_min=1] ~ ~ ~  particle snowshovel ~ ~ ~ 0.2 0.4 0.2 0.8 100
+　　* /execute @p[score_isXX_min=1] ~ ~ ~ particle snowshovel ~ ~ ~ 0.2 0.4 0.2 0.8 100
+　　* /execute @p[score_isXX_min=1] ~ ~ ~ particle flame ~ ~ ~ 0.2 0.4 0.2 0.8 100
+　　* /execute @e[type=Player] ~ ~ ~ particle enchanttable ~ ~ ~ 0.2 0.4 0.2 0.8 100
 * /particle iconcrack_264 ~ ~3 ~ 1 3 1 0.01 1000
 * [参考](http://www61.atwiki.jp/mccmd/pages/58.html)
 
 ### コマンド本
-* /give @p written_book 1 0 {author:"mizkun",title:"ver0.8.0998",pages:["{text:'',color:dark_gray,extra:[{text:'open a door             ',color:black,bold:false,clickEvent:{action:run_command,value:'/setblock -286 63 56 minecraft:redstone_block 0 replace'}},{text:'to MizkunHouse          ',color:black,bold:false,clickEvent:{action:run_command,value:'/tp -274.5 64 62'}},{text:'fire                        ',color:red,bold:false,clickEvent:{action:run_command,value:'/particle flame ~ ~0 ~ 1 1 1 0.05 100 @p'}},{text:'fordebbug                ',color:blue,bold:true,clickEvent:{action:run_command,value:'/give @p minecraft:stone_button'}}]}"]}
+* /give @p written_book 1 0 {author:"mizkun",title:"Diorite",pages:["{text:'',color:dark_gray,extra:[{text:'open a door             ',color:black,bold:false,clickEvent:{action:run_command,value:'/setblock -286 63 56 minecraft:redstone_block 0 replace'}},{text:'to MizkunHouse          ',color:black,bold:false,clickEvent:{action:run_command,value:'/tp -274.5 64 62'}},{text:'fire                        ',color:red,bold:false,clickEvent:{action:run_command,value:'/particle flame ~ ~0 ~ 1 1 1 0.05 100 @p'}},{text:'fordebbug                ',color:blue,bold:true,clickEvent:{action:run_command,value:'/give @p minecraft:stone_button'}}]}"]}
 * ↑最新版
 * そのうち追加します
 * 実装してほしい魔法があれば連絡ください
