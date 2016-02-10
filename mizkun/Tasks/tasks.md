@@ -7,6 +7,7 @@
 * 魔法
 * 雷の矢
 * 雷を召喚するアイテム
+* 旅人の杖
 
 ### スコアボード練習
 #### 方針
@@ -167,3 +168,57 @@
  * /testfor @e[Item:{display:{Name:"LightningStar", ench:[]}},Onground:true]
  * /testfor @e[type=Item] {OnGround:true,Item:{id:minecraft:nether_star,tag:{display:{Name:"LightningStar"}}}}
 * /execute @e[type=Item] {OnGround:true,Item:{id:minecraft:nether_star,tag:{display:{Name:"LightningStar"}}}} ~ ~ ~ summon ~ ~ ~ LightningBolt
+
+
+### 旅人の杖
+#### 方針
+* 26方向を検知してショートワープ
+  * それぞれについて方向を検知→正しい方向にショートワープ
+  
+#### Ver1
+##### 東西南北で検知
+* 北 rym=134,ry=-135
+  * tp ~ ~ ~3
+* 東 rym=-134,ry=-45
+  * tp ~3 ~ ~
+* 南 rym=-44,ry=45
+  * tp ~ ~ ~-3
+* 西 rym=44,ry=135
+  * tp ~-3 ~ ~
+
+### 本のコピー
+#### 方針
+* Book&Quilを持ってLV40ならばコピー
+* コピーしたい本をチェストにいれる
+* コピーされる本(Book&Quil)を指定の場所にセット
+* お互いが検知されればコピー開始
+* 下の宝箱にコピーされた本が！
+
+#### 実装
+* 本がはいったチェストの検知
+  * testforblock x y z minecraft:chest -1
+{Items:[{id:minecraft:enchanted_book",Count:1b}]}
+* Book&Quilを置く場所(ArmorStand)
+ * /summon ArmorStand ~0.1 ~0.2 ~ {Invisible:1b,NoBasePlate:1b,NoGravity:1b,ShowArms:1b,Rotation:[90f],Equipment:[{id:"enchanted_book",Count:1b},{},{},{},{}],Pose:{Body:[90f,0f,90f],LeftLeg:[173f,0f,0f],RightLeg:[43f,152f,27f],LeftArm:[20f,0f,0f],RightArm:[0f,270f,247f]}}
+* Book&Quilを置く場所(ArmorStand)の検知
+ * /testfor @e[type=ArmorStand,r=5] {Equipment:[{id:"minecraft:writable_book"}]}
+* 経験値の検知
+ * /testfor @p[r=5,lm=40]
+* 経験値を減らす
+ * /xp -40L @p[r=5,lm=40]
+* コピーの実行
+ * /clone A(x,y,z) A(x,y,z) B(x,y,z)
+
+
+
+#### おまけ
+* 空中に本が浮いてる！！
+  * /summon ArmorStand ~0.1 ~0.2 ~ {Invisible:1b,NoBasePlate:1b,NoGravity:1b,ShowArms:1b,Rotation:[90f],Equipment:[{id:"writable_book",Count:1b},{},{},{},{}],Pose:{Body:[90f,0f,90f],LeftLeg:[173f,0f,0f],RightLeg:[43f,152f,27f],LeftArm:[20f,0f,0f],RightArm:[0f,270f,247f]}}
+* 本がコピーされる時のパーティクル
+ * /particle enchantmenttable -284 66 50 0.2 0.1 0.2 0.1 2
+* エンティティ化したエンチャ本の検知
+ * @e[type=Item] {Item:{id:minecraft:enchanted_book}}で検知できる？
+ * testforで検知成功
+* selectorを使って同じものを装備させられるか
+   * /summon ArmorStand ~0.1 ~0.2 ~ {Invisible:1b,NoBasePlate:1b,NoGravity:1b,ShowArms:1b,Rotation:[90f],Equipment:[{id:{"selector":"e[type=Item]"},Count:1b},{},{},{},{}],Pose:{Body:[90f,0f,90f],LeftLeg:[173f,0f,0f],RightLeg:[43f,152f,27f],LeftArm:[20f,0f,0f],RightArm:[0f,270f,247f]}}
+* チェスト内に本があることを検知→コピー→ホッパーで取り出してドロッパーでエンティティ化→tpして台座に。適宜killして自然に
